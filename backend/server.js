@@ -1,25 +1,23 @@
-const express = require('express');
+const express = require("express");
 const { Client } = require('pg');
-const cors = require('cors'); //security system 
-const dotenv = require('dotenv');
-const { Configuration, OpenAIApi } = require('openai');
+const dotenv = require("dotenv");
+const cors = require("cors");
+const { Configuration, OpenAIApi } = require("openai");
 
 dotenv.config();
 const app = express();
-app.use(cors()); 
-
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
-//AI configuration
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
 const openai = new OpenAIApi(configuration);
 
-
 // Database connection
-const client = new Client({
+/*const client = new Client({
   user: 'labber',
   host: 'localhost',
   database: 'final',
@@ -30,53 +28,50 @@ const client = new Client({
 client.connect()
   .then(() => console.log('Connected to PostgreSQL database'))
   .catch((error) => console.error('Error connecting to PostgreSQL database:', error));
+*/ 
 
-// Routes
-app.get('/api/images', (req, res) => {
-  const query = 'SELECT * FROM images';
-
-  client.query(query)
-    .then((result) => {
-      const images = result.rows;
-      res.json(images);
-    })
-    .catch((error) => {
-      console.error('Error fetching images from database:', error);
-      res.status(500).json({ error: 'An error occurred while fetching images' });
-    });
+// Set Content Security Policy (CSP)
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "img-src 'self' data:; default-src 'self'");
+  next();
 });
 
-
-// SERVER PART
+// Routes
 app.get('/', (req, res) => {
   return res.status(200).send('Server is up');
 });
 
+// AI
+app.get('/generate', (req, res) => {
+  return res.status(405).send('Method Not Allowed');
+});
 
-//AI 
-app.post('/generate', async (req, res) => {
-  const { prompt, size } = req.body;
-  // validation
-  if(!prompt || !size){
-    return res.status(400).send('Bad request');
-  }
+app.post("/generate", async (req, res) => {
   try {
+    const { prompt, size } = req.body;
+    // Validation
+    if (!prompt || !size) {
+      return res.status(400).send("Bad Request!!!");
+    }
+
     const response = await openai.createImage({
       prompt,
       size,
       n: 1,
     });
-   const image_url =response.data[0].url;
-    return response.status(200).send({
+    const image_url = response.data.data[0].url;
+
+    return res.status(200).send({
       src: image_url,
     });
   } catch (error) {
-      return response.status(500).send({error});
+    console.error('Error generating image:', error);
+    return res.status(500).send({ error: 'An error occurred while generating the image' });
   }
 });
 
 // Start the server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8300;
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
