@@ -1,34 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Link, Routes, Navigate } from 'react-router-dom';
+import InputBox from './components/InputBox';
+import { Configuration, OpenAIApi } from 'openai';
+import GeneratedImage from './components/GeneratedImage';
+
+const configuration = new Configuration({
+  apiKey: process.env.REACT_APP_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
 
 const App = () => {
-  const [images, setImages] = useState([]);
+  const [userPrompt, setUserPrompt] = useState('');
+  const [imageUrl, setImageUrl] = useState();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/api/images');
-        const data = await response.json();
-        console.log("DATA: ",data)
-        setImages(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+  const generateImages = async () => {
+    const imageParameters = {
+      prompt: userPrompt,
     };
-     fetchData();
-  }, []);
-
- 
+    const response = await openai.createImage(imageParameters);
+    const urlData = response.data.data[0].url;
+    setImageUrl(urlData);
+  };
 
   return (
-    <div>
-      <h1>Images</h1>
-      {images.map((image) => (
-        <div key={image.id}>
-          <img src={image.image_url} alt="Image" />
-          <p>Keyword: {image.keyword}</p>
-        </div>
-      ))}
-    </div>
+    <Router>
+      <div>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div>
+                {imageUrl && (
+                  <Navigate to="/generated-images" replace state={{ imageUrl }} />
+                )}
+                <InputBox label="Description" setAttribute={setUserPrompt} />
+                <button className="generate-button-main" onClick={generateImages}>
+                  Generate
+                </button>
+              </div>
+            }
+          />
+          <Route
+            path="/generated-images"
+            element={<GeneratedImage />}
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
