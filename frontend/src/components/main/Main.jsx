@@ -40,7 +40,7 @@ const Main = () => {
          }
          setLoading(true);
          console.log({ prompt, size });
-         const url = "http://localhost:8300/generate";
+         const url = "http://localhost:8000/generate";
          const data = { prompt: `${prompt}. ${theme}`, size }; // appended theme to prompt
          const response = await axios.post(url, data);
          const imgSrc = response.data.src;
