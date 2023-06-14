@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/Themes.scss';
+import './themes.scss';
 
 const Themes = ({ setTheme }) => {
   const [themes, setThemes] = useState([]);
