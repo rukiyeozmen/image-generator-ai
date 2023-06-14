@@ -100,6 +100,18 @@ app.get("/generate", (req, res) => {
   return res.status(405).send("Method Not Allowed");
 });
 
+// Themes
+app.get('/themes', async (req, res) => {
+  try {
+    const result = await client.query('SELECT * FROM Themes;');
+    return res.status(200).send(result.rows);
+  } catch (error) {
+    console.error('Error fetching themes:', error);
+    return res.status(500).send({ error: 'An error occurred while fetching the themes' });
+  }
+});
+
+
 app.post("/generate", async (req, res) => {
   const { prompt, size } = req.body;
 

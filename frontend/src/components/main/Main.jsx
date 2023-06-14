@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./main.scss";
 import axios from "axios";
+import Themes from "../themes/Themes";
 import {
    Stack,
    TextField,
@@ -28,6 +29,7 @@ const Main = () => {
    const [open, setOpen] = useState(false);
    const [img, setImg] = useState("");
    const [loading, setLoading] = useState(false);
+   const [theme, setTheme] = useState(""); // set theme
 
    const clickHandler = async () => {
       try {
@@ -39,7 +41,7 @@ const Main = () => {
          setLoading(true);
          console.log({ prompt, size });
          const url = "http://localhost:8300/generate";
-         const data = { prompt, size };
+         const data = { prompt: `${prompt}. ${theme}`, size }; // appended theme to prompt
          const response = await axios.post(url, data);
          const imgSrc = response.data.src;
          setImg(imgSrc);
@@ -63,6 +65,7 @@ const Main = () => {
                   <MenuItem value={sizes.medium}>medium</MenuItem>
                   <MenuItem value={sizes.large}>large</MenuItem>
                </Select>
+               <Themes setTheme={setTheme} />
                <Button variant="contained" onClick={clickHandler} sx={{ mt: "1rem" }}>
                   Generate New Image
                </Button>

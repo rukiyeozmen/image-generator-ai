@@ -15,3 +15,10 @@ INSERT INTO Captions (caption, user_id, image_id) VALUES
   ('Beautiful sunset', 1, 1),
   ('Delicious pizza', 1, 2),
   ('Amazing city view', 2, 3);
+
+
+-- Insert sample data for the Captions table
+INSERT INTO Themes (label, content) VALUES
+  ('sketch', 'in the style of Hand-drawn with graphite pencil'),
+  ('anime', 'In the style of anime from studio ghibli'),
+  ('miami', 'in the style of miami vice synthwave and neo tokyo retro vibes')
