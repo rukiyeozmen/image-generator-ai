@@ -4,6 +4,7 @@ import Main from './components/main/Main';
 import NavBar from './components/navbar/NavBar';
 import LoginForm from './components/login/LoginForm';
 import RegisterForm from './components/login/RegisterForm';
+import Favorites from './pages/Favorites';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
             <Route exact path="/" element={<Main />} />
             <Route exact path="/login" element={<LoginForm />} />
             <Route exact path="/register" element={<RegisterForm />} />
+            <Route exact path="/favorites" element={<Favorites/>} />
          </Routes>
      </Router></>
   );

@@ -20,6 +20,9 @@ const NavBar = ({ isAuthenticated, handleLogout }) => {
               <li>
                 <Link to="/register">Register</Link>
               </li>
+              <li>
+                <Link to="/favorites">Favorites</Link>
+              </li>
             </>
           )}
           {isAuthenticated && (
