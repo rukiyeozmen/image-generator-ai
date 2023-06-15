@@ -1,7 +1,8 @@
-import { useState } from "react";
-import "./main.scss";
+import React, { useState } from "react";
 import axios from "axios";
 import Themes from "../themes/Themes";
+import './main.scss';
+
 import {
    Stack,
    TextField,
@@ -15,33 +16,29 @@ import {
    CircularProgress,
 } from "@mui/material";
 
-// 256x256, 512x512, or 1024x1024 pixels
-
 const sizes = {
    small: "256x256",
    medium: "512x512",
    large: "1024x1024",
 };
 
-const Main = () => {
+const Main = ({ userName }) => { // Add userName prop
    const [prompt, setPrompt] = useState("");
    const [size, setSize] = useState(sizes.small);
    const [open, setOpen] = useState(false);
    const [img, setImg] = useState("");
    const [loading, setLoading] = useState(false);
-   const [theme, setTheme] = useState(""); // set theme
+   const [theme, setTheme] = useState("");
 
    const clickHandler = async () => {
       try {
          if (prompt === "") {
-            //  alert("please enter something");
             setOpen(true);
             return;
          }
          setLoading(true);
-         console.log({ prompt, size });
          const url = "http://localhost:8000/generate";
-         const data = { prompt: `${prompt}. ${theme}`, size }; // appended theme to prompt
+         const data = { prompt: `${prompt}. ${theme}`, size };
          const response = await axios.post(url, data);
          const imgSrc = response.data.src;
          setImg(imgSrc);
@@ -53,9 +50,9 @@ const Main = () => {
       }
    };
 
-   //
    return (
       <div className="main">
+         
          <Stack spacing={1} className="main-stack">
             <TextField label="Prompt" variant="outlined" value={prompt} onChange={(e) => setPrompt(e.target.value)} />
             <FormControl fullWidth>
@@ -67,7 +64,7 @@ const Main = () => {
                </Select>
                <Themes setTheme={setTheme} />
                <Button variant="contained" onClick={clickHandler} sx={{ mt: "1rem" }}>
-                  Generate New Image
+                  Generate
                </Button>
             </FormControl>
          </Stack>
