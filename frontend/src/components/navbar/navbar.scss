@@ -1,6 +1,6 @@
 .navbar {
   width: 100%;
-  height: 50px;
+  height: 80px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -8,4 +8,7 @@
   padding-left: 1rem;
   color: #fff;
   background-color: rgb(3, 3, 84);
+}
+  .no-bullets {
+    list-style-type: none;
 }

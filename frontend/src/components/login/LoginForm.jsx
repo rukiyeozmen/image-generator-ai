@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './login.scss';
 
-const LoginForm = () => {
+const LoginForm = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +21,10 @@ const LoginForm = () => {
 
     if (response.ok) {
       // Login successful
-      console.log('Login successful');
+      const data = await response.json();
+      const { username } = data.user;
+      onLogin(username); // Pass the user's name to the parent component
+      navigate('/'); // Redirect to the main page
     } else {
       // Login failed
       console.log('Login failed');
