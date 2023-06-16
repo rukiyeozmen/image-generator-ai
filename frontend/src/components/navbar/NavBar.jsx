@@ -15,6 +15,40 @@ const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
       <h1>ImageNius</h1>
       <nav>
 
+        <ul className="no-bullets">
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          {!isAuthenticated && (
+            <>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+              <li>
+                <Link to="/favorites">Favorites</Link>
+              </li>
+            </>
+          )}
+          {isAuthenticated && (
+            <>
+              <li>
+                <Link to="/">{userName}</Link>
+              </li>
+              <li>
+                <button onClick={handleLogoutClick}>Logout</button>
+              </li>
+              <li>
+                <Link to="/favorites">Favorites</Link>
+
+              </li>
+            </>
+          )}
+        </ul>
+
+
         <Link to="/">Home</Link>
 
         {!isAuthenticated && (
@@ -32,6 +66,7 @@ const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
             <button onClick={handleLogoutClick}>Logout</button>
           </>
         )}
+
       </nav>
     </div>
   );

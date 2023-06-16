@@ -14,6 +14,7 @@ import {
    Snackbar,
    Alert,
    CircularProgress,
+   imageListClasses,
 } from "@mui/material";
 
 const sizes = {
@@ -49,10 +50,19 @@ const Main = ({ userName }) => { // Add userName prop
          return;
       }
    };
+   const save = async () => {
+    console.log('save')
+    try { const url = "http://localhost:8000/user/favorite";
+       const data = { url: img, userName};
+       const response = await axios.post(url, data);
+       console.log(response?.data)
+   } catch (error) {
 
+   }
+
+   }
    return (
       <div className="main">
-         
          <Stack spacing={1} className="main-stack">
             <TextField label="Prompt" variant="outlined" value={prompt} onChange={(e) => setPrompt(e.target.value)} />
             <FormControl fullWidth>
@@ -69,7 +79,12 @@ const Main = ({ userName }) => { // Add userName prop
             </FormControl>
          </Stack>
          {loading && <CircularProgress color="success" sx={{ mt: "1rem" }} />}
-         {img !== "" && <img src={img} alt="img" />}
+         {img !== "" &&
+          <>
+
+          <img src={img} alt="img" /> 
+          <button onClick={()=> save()}>save</button>
+          </>}
          <Snackbar open={open} autoHideDuration={6000} onClose={() => setOpen(false)} message="Note archived">
             <Alert severity="error">This is an error alert — check it out!</Alert>
          </Snackbar>

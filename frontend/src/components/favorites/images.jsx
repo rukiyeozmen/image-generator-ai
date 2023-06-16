@@ -10,7 +10,7 @@ const Images = ({ userEmail }) => {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        const response = await axios.get(`/user/favorite?email=${userEmail}`);
+        const response = await axios.get(`/user/favorite?userName=${userEmail}`);
         setFavorites(response.data);
       } catch (error) {
         console.error(error);

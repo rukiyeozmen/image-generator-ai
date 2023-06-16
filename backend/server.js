@@ -117,23 +117,22 @@ app.get('/themes', async (req, res) => {
 // get images based on user email 
 
 app.get("/user/favorite", async (req, res) => {
-  const { email } = req.query;
+  const { userName } = req.query;
 
-  if (!email) {
-    return res.status(400).send("Missing Email!");
+  if (!userName) {
+    return res.status(400).send("Missing username!");
   }
 
   // Get user_id from Users table
-  const user = await client.query('SELECT id FROM Users WHERE email = $1', [email]);
+  const user = await client.query('SELECT id FROM Users WHERE username = $1', [userName]);
 
   if (user.rows.length === 0) {
     return res.status(404).send("User not found!");
   }
 
-  const userId = user.rows[0].id;
 
   // Get favorite images from Images table
-  const favorites = await client.query('SELECT image_url FROM Images WHERE user_id = $1 AND is_favorite = true', [userId]);
+  const favorites = await client.query('SELECT image_url FROM Favorites WHERE username = $1', [userName]);
 
   res.status(200).json(favorites.rows);
 });
@@ -142,23 +141,24 @@ app.get("/user/favorite", async (req, res) => {
 //post for saving image urls to favorites by email
 
 app.post("/user/favorite", async (req, res) => {
-  const { url, email } = req.body;
+  const { url, userName } = req.body;
 
-  if (!url || !email) {
-    return res.status(400).send("Missing URL or Email!");
+  if (!url || !userName) {
+    return res.status(400).send("Missing URL or username!");
   }
 
   // Get user_id from Users table
-  const user = await client.query('SELECT id FROM Users WHERE email = $1', [email]);
+  const user = await client.query('SELECT id FROM Users WHERE username = $1', [userName]);
 
   if (user.rows.length === 0) {
     return res.status(404).send("User not found!");
   }
 
-  const userId = user.rows[0].id;
-
   // Update Images table
-  await client.query('UPDATE Images SET is_favorite = true WHERE image_url = $1 AND user_id = $2', [url, userId]);
+
+  const insertQuery = "INSERT INTO Favorites (image_url, username) VALUES ($1, $2)";
+  const insertValues = [url, userName];
+  await client.query(insertQuery, insertValues);
 
   res.status(200).send("Image saved to favorites!");
 });
