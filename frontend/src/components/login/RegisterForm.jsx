@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 import './register.scss';
 
 const RegisterForm = () => {
@@ -10,22 +12,20 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Send registration data to the server
-    const response = await fetch('/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, email, password }),
-    });
-
-    if (response.ok) {
-      navigate('/login'); 
-    } else {
-      console.log('Registration failed');
+  
+    try {
+      const response = await axios.post('/register', { username, email, password });
+  
+      if (response.status === 200) {
+        navigate('/login');
+      } else {
+        console.log('Registration failed');
+      }
+    } catch (error) {
+      console.error('Error during registration:', error);
     }
   };
+  
 
   return (
     <div className="register-container">

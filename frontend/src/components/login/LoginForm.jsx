@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './login.scss';
 
 const LoginForm = ({ onLogin }) => {
@@ -7,29 +8,26 @@ const LoginForm = ({ onLogin }) => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
     // Send login data to the server
-    const response = await fetch('/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (response.ok) {
-      // Login successful
-      const data = await response.json();
-      const { username } = data.user;
-      onLogin(username); // Pass the user's name to the parent component
-      navigate('/'); // Redirect to the main page
-    } else {
-      // Login failed
-      console.log('Login failed');
-    }
-  };
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+    
+      try {
+        const response = await axios.post('/login', { email, password });
+        
+        if (response.status === 200) {
+          const { username } = response.data.user;
+          onLogin(username);
+          navigate('/');
+        } else {
+          console.log('Login failed');
+        }
+      } catch (error) {
+        console.error('Error during login:', error);
+      }
+    };
+    
 
   return (
     <div className="login-container">
@@ -41,8 +39,7 @@ const LoginForm = ({ onLogin }) => {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+          required/>
         <br />
         <label htmlFor="password">Password:</label>
         <input
@@ -50,8 +47,7 @@ const LoginForm = ({ onLogin }) => {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          required/>
         <br />
         <button type="submit">Login</button>
       </form>

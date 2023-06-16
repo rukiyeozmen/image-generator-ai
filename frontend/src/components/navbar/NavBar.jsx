@@ -6,42 +6,32 @@ const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
   const navigate = useNavigate();
 
   const handleLogoutClick = () => {
-    handleLogout(); 
-    navigate('/'); 
+    handleLogout();
+    navigate('/');
   };
 
   return (
     <div className="navbar">
       <h1>ImageNius</h1>
       <nav>
-        <ul className="no-bullets">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          {!isAuthenticated && (
-            <>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/register">Register</Link>
-              </li>
-              <li>
-                <Link to="/favorites">Favorites</Link>
-              </li>
-            </>
-          )}
-          {isAuthenticated && (
-            <>
-              <li>
-                <p>{userName}</p>
-              </li>
-              <li>
-                <button onClick={handleLogoutClick}>Logout</button>
-              </li>
-            </>
-          )}
-        </ul>
+
+        <Link to="/">Home</Link>
+
+        {!isAuthenticated && (
+          <>
+
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+            <Link to="/favorites">Favorites</Link>
+
+          </>
+        )}
+        {isAuthenticated && (
+          <>
+            <p>{userName}</p>
+            <button onClick={handleLogoutClick}>Logout</button>
+          </>
+        )}
       </nav>
     </div>
   );
