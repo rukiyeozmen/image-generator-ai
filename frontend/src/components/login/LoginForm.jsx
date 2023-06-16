@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 import './login.scss';
 
 const LoginForm = ({ onLogin }) => {
@@ -9,24 +10,24 @@ const LoginForm = ({ onLogin }) => {
   const navigate = useNavigate();
 
 
-    // Send login data to the server
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-    
-      try {
-        const response = await axios.post('/login', { email, password });
-        
-        if (response.status === 200) {
-          const { username } = response.data.user;
-          onLogin(username);
-          navigate('/');
-        } else {
-          console.log('Login failed');
-        }
-      } catch (error) {
-        console.error('Error during login:', error);
+  // Send login data to the server
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await axios.post('/login', { email, password });
+      
+      if (response.status === 200) {
+        const { username } = response.data.user;
+        onLogin(username);
+        navigate('/');
+      } else {
+        console.log('Login failed');
       }
-    };
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
+  };
     
 
   return (

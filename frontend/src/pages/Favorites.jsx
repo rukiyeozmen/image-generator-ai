@@ -12,7 +12,6 @@ const Favorites = ({userName}) => {
       <Images userEmail={userName}/>
       <h1>Favorites Page</h1>
       <Images userEmail={username}/>
-      
     </div>
   );
 };
