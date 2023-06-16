@@ -114,6 +114,55 @@ app.get('/themes', async (req, res) => {
   }
 });
 
+// get images based on user email 
+
+app.get("/user/favorite", async (req, res) => {
+  const { email } = req.query;
+
+  if (!email) {
+    return res.status(400).send("Missing Email!");
+  }
+
+  // Get user_id from Users table
+  const user = await client.query('SELECT id FROM Users WHERE email = $1', [email]);
+
+  if (user.rows.length === 0) {
+    return res.status(404).send("User not found!");
+  }
+
+  const userId = user.rows[0].id;
+
+  // Get favorite images from Images table
+  const favorites = await client.query('SELECT image_url FROM Images WHERE user_id = $1 AND is_favorite = true', [userId]);
+
+  res.status(200).json(favorites.rows);
+});
+
+
+//post for saving image urls to favorites by email
+
+app.post("/user/favorite", async (req, res) => {
+  const { url, email } = req.body;
+
+  if (!url || !email) {
+    return res.status(400).send("Missing URL or Email!");
+  }
+
+  // Get user_id from Users table
+  const user = await client.query('SELECT id FROM Users WHERE email = $1', [email]);
+
+  if (user.rows.length === 0) {
+    return res.status(404).send("User not found!");
+  }
+
+  const userId = user.rows[0].id;
+
+  // Update Images table
+  await client.query('UPDATE Images SET is_favorite = true WHERE image_url = $1 AND user_id = $2', [url, userId]);
+
+  res.status(200).send("Image saved to favorites!");
+});
+
 
 app.post("/generate", async (req, res) => {
   const { prompt, size } = req.body;

@@ -13,6 +13,7 @@ CREATE TABLE Images(
   id SERIAL PRIMARY KEY NOT NULL,
   image_url VARCHAR(255) NOT NULL,
   keyword VARCHAR(255) NOT NULL,
+  is_favorite BOOLEAN DEFAULT false,
   created_at TIMESTAMP DEFAULT now(),
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
