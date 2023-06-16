@@ -34,13 +34,14 @@ const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
           {isAuthenticated && (
             <>
               <li>
-                <p>{userName}</p>
+                <Link to="/">{userName}</Link>
               </li>
               <li>
                 <button onClick={handleLogoutClick}>Logout</button>
               </li>
               <li>
                 <Link to="/favorites">Favorites</Link>
+
               </li>
             </>
           )}
