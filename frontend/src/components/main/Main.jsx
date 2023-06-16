@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 import Themes from "../themes/Themes";
-import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share';
+// import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share';
 
 
 import './main.scss';
@@ -43,13 +43,16 @@ const Main = ({ userName }) => {
             return;
          }
          setLoading(true);
-         const url = "http://localhost:8000/generate";
+         const url = "http://192.168.1.65:8000/generate";
          const data = { prompt: `${prompt}. ${theme}`, size };
-         const response = await axios.post(url, data);
+         const response = await
+            axios.post
+               (url, data);
          const imgSrc = response.data.src;
+         const imgLink = "http://192.168.1.65:8000/" + response.data.image
          setImg(imgSrc);
          setLoading(false);
-         setDownloadUrl(imgSrc); // Set the download URL directly from the response
+         setDownloadUrl(imgLink); // Set the download URL directly from the response
 
          // Generate social media sharing URLs
          const shareUrls = {
@@ -66,14 +69,18 @@ const Main = ({ userName }) => {
    };
 
    const handleShare = (url) => {
-      window.open(url, "_blank");
+
+      window.open
+         (url, "_blank");
    };
 
    const save = async () => {
       try {
-         const url = "http://localhost:8000/user/favorite";
+         const url = "http://192.168.1.65:8000/user/favorite";
          const data = { url: img, userName };
-         const response = await axios.post(url, data);
+         const response = await
+            axios.post
+               (url, data);
          console.log(response?.data);
       } catch (error) {
          // Handle error
@@ -82,20 +89,22 @@ const Main = ({ userName }) => {
 
    const downloadImage = () => {
       fetch(downloadUrl)
-        .then((response) => response.blob())
-        .then((blob) => {
-          const url = window.URL.createObjectURL(new Blob([blob]));
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download", "generated_image.png");
-          document.body.appendChild(link);
-          link.click();
-          link.parentNode.removeChild(link);
-        })
-        .catch((error) => {
-          console.error("Error downloading image:", error);
-        });
-    };
+         .then((response) => response.blob())
+         .then((blob) => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "generated_image.png");
+            document.body.appendChild(link);
+
+            link.click
+               ();
+            link.parentNode.removeChild(link);
+         })
+         .catch((error) => {
+            console.error("Error downloading image:", error);
+         });
+   };
 
 
    return (
@@ -126,7 +135,7 @@ const Main = ({ userName }) => {
                <div className="share-buttons">
                   {shareUrls && (
                      <>
-                        <FacebookShareButton url={shareUrls.facebook} onClick={() => handleShare(shareUrls.facebook)}>
+                        {/* <FacebookShareButton url={shareUrls.facebook} onClick={() => handleShare(shareUrls.facebook)}>
                            Facebook
                         </FacebookShareButton>
                         <TwitterShareButton url={shareUrls.twitter} onClick={() => handleShare(shareUrls.twitter)}>
@@ -134,7 +143,7 @@ const Main = ({ userName }) => {
                         </TwitterShareButton>
                         <LinkedinShareButton url={shareUrls.linkedin} onClick={() => handleShare(shareUrls.linkedin)}>
                            LinkedIn
-                        </LinkedinShareButton>
+                        </LinkedinShareButton> */}
                      </>
                   )}
                </div>
@@ -149,4 +158,4 @@ const Main = ({ userName }) => {
    );
 };
 
-export default Main;
+export default Main; 
