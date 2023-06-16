@@ -47,26 +47,6 @@ const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
             </>
           )}
         </ul>
-
-
-        <Link to="/">Home</Link>
-
-        {!isAuthenticated && (
-          <>
-
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
-            <Link to="/favorites">Favorites</Link>
-
-          </>
-        )}
-        {isAuthenticated && (
-          <>
-            <p>{userName}</p>
-            <button onClick={handleLogoutClick}>Logout</button>
-          </>
-        )}
-
       </nav>
     </div>
   );

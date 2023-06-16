@@ -40,11 +40,11 @@ app.use((req, res, next) => {
   res.setHeader("Content-Security-Policy", "img-src 'self' data:; default-src 'self'");
   next();
 });
+
 // Routes
 app.get("/", (req, res) => {
   return res.status(200).send("Server is up");
 });
-
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -69,9 +69,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-
-
-// Register endpoint
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -98,12 +95,10 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// AI
 app.get("/generate", (req, res) => {
   return res.status(405).send("Method Not Allowed");
 });
 
-// Themes
 app.get('/themes', async (req, res) => {
   try {
     const result = await client.query('SELECT * FROM Themes;');
@@ -113,8 +108,6 @@ app.get('/themes', async (req, res) => {
     return res.status(500).send({ error: 'An error occurred while fetching the themes' });
   }
 });
-
-// get images based on user email 
 
 app.get("/user/favorite", async (req, res) => {
   const { userName } = req.query;
@@ -130,15 +123,11 @@ app.get("/user/favorite", async (req, res) => {
     return res.status(404).send("User not found!");
   }
 
-
-  // Get favorite images from Images table
+  // Get favorite images from Favorites table
   const favorites = await client.query('SELECT image_url FROM Favorites WHERE username = $1', [userName]);
 
   res.status(200).json(favorites.rows);
 });
-
-
-//post for saving image urls to favorites by email
 
 app.post("/user/favorite", async (req, res) => {
   const { url, userName } = req.body;
@@ -154,15 +143,13 @@ app.post("/user/favorite", async (req, res) => {
     return res.status(404).send("User not found!");
   }
 
-  // Update Images table
-
+  // Update Favorites table
   const insertQuery = "INSERT INTO Favorites (image_url, username) VALUES ($1, $2)";
   const insertValues = [url, userName];
   await client.query(insertQuery, insertValues);
 
   res.status(200).send("Image saved to favorites!");
 });
-
 
 app.post("/generate", async (req, res) => {
   const { prompt, size } = req.body;
@@ -178,8 +165,17 @@ app.post("/generate", async (req, res) => {
   });
   const image_url = response.data.data[0].url;
 
+  // Generate social media sharing URLs
+  const shareUrls = {
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(image_url)}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(image_url)}&text=${encodeURIComponent(prompt)}`,
+    linkedin: `https://www.linkedin.com/shareArticle?url=${encodeURIComponent(image_url)}&title=${encodeURIComponent(prompt)}`,
+  };
+  
+
   return res.status(200).send({
     src: image_url,
+    shareUrls,
   });
 });
 
@@ -199,3 +195,4 @@ const port = process.env.PORT || 8000;
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
+
