@@ -167,7 +167,6 @@ app.post("/user/favorite", async (req, res) => {
 app.post("/generate", async (req, res) => {
   const { prompt, size } = req.body;
 
-  // Validation
   if (!prompt || !size) {
     return res.status(400).send("Bad Request!!!");
   }

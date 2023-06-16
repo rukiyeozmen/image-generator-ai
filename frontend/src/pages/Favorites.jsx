@@ -8,7 +8,6 @@ const Favorites = ({username}) => {
     <div>
       <h1>Favorites Page</h1>
       <Images userEmail={username}/>
-      
     </div>
   );
 };
