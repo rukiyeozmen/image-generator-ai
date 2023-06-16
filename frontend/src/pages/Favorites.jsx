@@ -10,6 +10,9 @@ const Favorites = ({userName}) => {
       <button onClick={()=>console.log('yo ', userName)}>test</button>
 
       <Images userEmail={userName}/>
+      <h1>Favorites Page</h1>
+      <Images userEmail={username}/>
+      
     </div>
   );
 };
