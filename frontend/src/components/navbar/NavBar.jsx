@@ -30,6 +30,8 @@ const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
           <>
             <p>{userName}</p>
             <button onClick={handleLogoutClick}>Logout</button>
+            <Link to="/favorites">Favorites</Link>
+
           </>
         )}
       </nav>
