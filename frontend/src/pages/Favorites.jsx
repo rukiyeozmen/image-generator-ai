@@ -1,13 +1,13 @@
 import React from 'react';
 import Images from '../components/favorites/images';
 
-const Favorites = () => {
+const Favorites = ({username}) => {
   // State, effect, and functions for fetching and displaying favorite images
 
   return (
     <div>
       <h1>Favorites Page</h1>
-      <Images/>
+      <Images userEmail={username}/>
     </div>
   );
 };
