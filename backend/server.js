@@ -45,13 +45,13 @@ app.get("/", (req, res) => {
   return res.status(200).send("Server is up");
 });
 
-// Login endpoint
+
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   // Validation
   if (!email || !password) {
-    return res.status(400).send("Bad Request!!!");
+    return res.status(400).json({ error: "Bad Request!!!" });
   }
 
   // Check the login credentials against the database
@@ -61,12 +61,15 @@ app.post("/login", async (req, res) => {
 
   if (result.rowCount === 1) {
     // Login successful
-    return res.status(200).send("Login successful");
+    const user = result.rows[0];
+    return res.status(200).json({ message: "Login successful", user: { username: user.username } });
   } else {
     // Login failed
-    return res.status(401).send("Unauthorized");
+    return res.status(401).json({ error: "Unauthorized" });
   }
 });
+
+
 
 // Register endpoint
 app.post("/register", async (req, res) => {

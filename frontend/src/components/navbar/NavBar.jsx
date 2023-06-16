@@ -1,14 +1,20 @@
-
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import './navbar.scss';
 
-const NavBar = ({ isAuthenticated, handleLogout }) => {
+const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
+  const navigate = useNavigate();
+
+  const handleLogoutClick = () => {
+    handleLogout(); 
+    navigate('/'); 
+  };
+
   return (
-    
     <div className="navbar">
       <h1>ImageNius</h1>
       <nav>
-        <ul>
+        <ul className="no-bullets">
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -26,9 +32,14 @@ const NavBar = ({ isAuthenticated, handleLogout }) => {
             </>
           )}
           {isAuthenticated && (
-            <li>
-              <button onClick={handleLogout}>Logout</button>
-            </li>
+            <>
+              <li>
+                <p>{userName}</p>
+              </li>
+              <li>
+                <button onClick={handleLogoutClick}>Logout</button>
+              </li>
+            </>
           )}
         </ul>
       </nav>

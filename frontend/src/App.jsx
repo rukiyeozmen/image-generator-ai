@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Main from './components/main/Main';
 import NavBar from './components/navbar/NavBar';
@@ -7,17 +7,24 @@ import RegisterForm from './components/login/RegisterForm';
 import Favorites from './pages/Favorites';
 
 const App = () => {
+  const [userName, setUserName] = useState('');
+
+  const handleLogout = () => {
+    setUserName('');
+  };
+
   return (
-   <>
-   <Router>
-        <NavBar />
-         <Routes>
-            <Route exact path="/" element={<Main />} />
-            <Route exact path="/login" element={<LoginForm />} />
-            <Route exact path="/register" element={<RegisterForm />} />
-            <Route exact path="/favorites" element={<Favorites userName={userName}/>} />
-         </Routes>
-     </Router></>
+    <>
+      <Router>
+        <NavBar isAuthenticated={userName !== ''} handleLogout={handleLogout} userName={userName} />
+        <Routes>
+          <Route path="/" element={<Main userName={userName} />} />
+          <Route path="/login" element={<LoginForm onLogin={setUserName} />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route exact path="/favorites" element={<Favorites userName={userName}/>} />
+        </Routes>
+      </Router>
+    </>
   );
 };
 
