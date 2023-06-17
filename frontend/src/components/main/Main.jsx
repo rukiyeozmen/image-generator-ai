@@ -36,40 +36,41 @@ const Main = ({ userName }) => {
   const [showHashtags, setShowHashtags] = useState(false); // New state variable
 
   const clickHandler = async () => {
-    try {
-      if (prompt === "") {
-        setOpen(true);
-        return;
-      }
-      setLoading(true);
-      const generateUrl = "http://localhost:8000/generate";
-      const generateData = { prompt: `${prompt}. ${theme}`, size };
-      const response = await axios.post(generateUrl, generateData);
-      const imgSrc = response.data.src;
-      const imgLink = "http://localhost:8000/" + response.data.image;
-      setImg(imgSrc);
-      setLoading(false);
-      setDownloadUrl(imgLink);
-
-      const hashtagsUrl = "http://localhost:8000/hashtags";
-      const hashtagsData = { keywords: prompt };
-      const hashtagsResponse = await axios.post(hashtagsUrl, hashtagsData);
-      const hashtags = hashtagsResponse.data;
-      setGeneratedHashtags(hashtags);
-      setShowHashtags(true); // Show the hashtags
-
-      const shareUrls = {
-        facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imgSrc)}`,
-        twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(imgSrc)}&text=${encodeURIComponent(prompt)}`,
-        linkedin: `https://www.linkedin.com/shareArticle?url=${encodeURIComponent(imgSrc)}&title=${encodeURIComponent(prompt)}`,
-      };
-      setShareUrls(shareUrls);
-    } catch (error) {
-      setOpen(true);
-      setLoading(false);
-    }
-  };
-
+   try {
+     if (prompt === "") {
+       setOpen(true);
+       return;
+     }
+     setLoading(true);
+     const generateUrl = "http://localhost:8000/generate";
+     const generateData = { prompt: `${prompt}. ${theme}`, size };
+     const response = await axios.post(generateUrl, generateData);
+     const imgSrc = response.data.src;
+     const imgLink = "http://localhost:8000/" + response.data.image;
+     setImg(imgSrc);
+     setLoading(false);
+     setDownloadUrl(imgLink);
+ 
+     const hashtagsUrl = "http://localhost:8000/hashtags";
+     const hashtagsData = { keywords: prompt };
+     const hashtagsResponse = await axios.post(hashtagsUrl, hashtagsData);
+     const hashtags = hashtagsResponse.data;
+     setGeneratedHashtags(hashtags);
+     setShowHashtags(true); // Show the hashtags
+ 
+     const shareText = `${prompt} ${hashtags.join(" ")}`;
+     const shareUrls = {
+       facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imgSrc)}&quote=${encodeURIComponent(shareText)}`,
+       twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(imgSrc)}&text=${encodeURIComponent(shareText)}`,
+       linkedin: `https://www.linkedin.com/shareArticle?url=${encodeURIComponent(imgSrc)}&title=${encodeURIComponent(shareText)}`,
+     };
+     setShareUrls(shareUrls);
+   } catch (error) {
+     setOpen(true);
+     setLoading(false);
+   }
+ };
+ 
   const handleShare = (url) => {
     window.open(url, "_blank");
   };
