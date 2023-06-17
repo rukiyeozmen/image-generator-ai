@@ -71,11 +71,6 @@ const Main = ({ userName }) => {
    }
  };
  
-    
- 
- 
- 
-
   const handleShare = (url) => {
     window.open(url, "_blank");
   };
