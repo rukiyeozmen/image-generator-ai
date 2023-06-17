@@ -1,4 +1,6 @@
 const express = require("express");
+const axios = require('axios');
+
 const { Client } = require("pg");
 const dotenv = require("dotenv");
 const cors = require("cors");
@@ -14,11 +16,17 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+const configurationImage = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY_IMAGE,
+});
+const configurationText = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY_TEXT,
 });
 
-const openai = new OpenAIApi(configuration);
+
+const openaiText = new OpenAIApi(configurationImage);
+const openaiImage = new OpenAIApi(configurationText);
+
 
 // Database connection
 const client = new Client({
@@ -43,6 +51,8 @@ app.use((req, res, next) => {
   res.setHeader("Content-Security-Policy", "img-src 'self' data:; default-src 'self'");
   next();
 });
+
+
 // Routes
 app.get("/", (req, res) => {
   return res.status(200).send("Server is up");
@@ -174,7 +184,7 @@ app.post("/generate", async (req, res) => {
     return res.status(400).send("Bad Request!!!");
   }
 
-  const response = await openai.createImage({
+  const response = await openaiImage.createImage({
     prompt,
     size,
     n: 1,
@@ -191,6 +201,36 @@ app.post("/generate", async (req, res) => {
     image: filename + ".png"
   });
 });
+
+app.post('/hashtags', async (req, res) => {
+  try {
+    const { prompt, keywords } = req.body;
+
+    const response = await openaiText.createCompletion({
+      model: 'text-davinci-003',
+      prompt: `Generate hashtags for ${keywords}`,
+      max_tokens: 100,
+    });
+
+    const { choices } = response.data;
+    const generatedText = choices[0].text.trim();
+
+    // Extract the first 10 words from the generated text
+    const words = generatedText.split(' ').slice(0, 5);
+
+    res.json(words); // Send the words as the final response
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Something went wrong' });
+  }
+});
+
+
+
+
+
+
+
 
 // Serve static files in production
 // if (process.env.NODE_ENV === "production") {
