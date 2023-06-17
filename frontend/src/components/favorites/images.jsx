@@ -32,4 +32,3 @@ const Images = ({ userEmail }) => {
 };
 
 export default Images;
-

@@ -17,6 +17,7 @@ const App = () => {
     <>
       <Router>
         <NavBar isAuthenticated={userName !== ''} handleLogout={handleLogout} userName={userName} />
+
         <Routes>
           <Route path="/" element={<Main userName={userName} />} />
           <Route path="/login" element={<LoginForm onLogin={setUserName} />} />
@@ -24,6 +25,7 @@ const App = () => {
           <Route exact path="/favorites" element={<Favorites userName={userName}/>} />
         </Routes>
       </Router>
+
     </>
   );
 };
