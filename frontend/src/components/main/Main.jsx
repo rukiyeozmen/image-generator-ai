@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Themes from "../themes/Themes";
 import "./main.scss";
+import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share';
 
 import {
   Stack,
@@ -33,10 +34,6 @@ const Main = ({ userName }) => {
   const [downloadUrl, setDownloadUrl] = useState("");
   const [generatedHashtags, setGeneratedHashtags] = useState([]);
   const [showHashtags, setShowHashtags] = useState(false); // New state variable
-
-  const handleHashtagsGenerated = (hashtags) => {
-    setGeneratedHashtags(hashtags);
-  };
 
   const clickHandler = async () => {
     try {
@@ -78,14 +75,10 @@ const Main = ({ userName }) => {
   };
 
   const save = async () => {
-    try {
       const url = "http://localhost:8000/user/favorite";
       const data = { url: img, userName };
       const response = await axios.post(url, data);
       console.log(response?.data);
-    } catch (error) {
-      // Handle error
-    }
   };
 
   const downloadImage = () => {
@@ -109,12 +102,8 @@ const Main = ({ userName }) => {
   return (
     <div className="main">
       <Stack spacing={1} className="main-stack">
-        <TextField
-          label="Prompt"
-          variant="outlined"
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-        />
+        <TextField label="Prompt" variant="outlined" value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}/>
         <FormControl fullWidth>
           <InputLabel>Size</InputLabel>
           <Select value={size} label="Size" onChange={(e) => setSize(e.target.value)}>
@@ -143,7 +132,7 @@ const Main = ({ userName }) => {
           <div className="share-buttons">
             {shareUrls && (
               <>
-                {/* <FacebookShareButton url={shareUrls.facebook} onClick={() => handleShare(shareUrls.facebook)}>
+                <FacebookShareButton url={shareUrls.facebook} onClick={() => handleShare(shareUrls.facebook)}>
                   Facebook
                 </FacebookShareButton>
                 <TwitterShareButton url={shareUrls.twitter} onClick={() => handleShare(shareUrls.twitter)}>
@@ -151,7 +140,7 @@ const Main = ({ userName }) => {
                 </TwitterShareButton>
                 <LinkedinShareButton url={shareUrls.linkedin} onClick={() => handleShare(shareUrls.linkedin)}>
                   LinkedIn
-                </LinkedinShareButton> */}
+                </LinkedinShareButton>
               </>
             )}
             {showHashtags && generatedHashtags.length > 0 && ( // Conditionally show the hashtags
