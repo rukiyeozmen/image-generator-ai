@@ -5,6 +5,7 @@ import NavBar from './components/navbar/NavBar';
 import LoginForm from './components/login/LoginForm';
 import RegisterForm from './components/login/RegisterForm';
 import Favorites from './pages/Favorites';
+import Latest from './components/explore/latest';
 
 const App = () => {
   const [userName, setUserName] = useState('');
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/login" element={<LoginForm onLogin={setUserName} />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route exact path="/favorites" element={<Favorites userName={userName}/>} />
+          <Route path="/explore" element={<Latest />} />
         </Routes>
       </Router>
 

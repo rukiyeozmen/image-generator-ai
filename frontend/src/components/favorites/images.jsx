@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// App component need to pass the logged in users email to Images as a prop
+// App componeent need to pass the logged in users email to Images as a prop
 
 const Images = ({ userEmail }) => {
   const [favorites, setFavorites] = useState([]);
@@ -32,3 +32,4 @@ const Images = ({ userEmail }) => {
 };
 
 export default Images;
+

@@ -150,6 +150,20 @@ app.get("/user/favorite", async (req, res) => {
   res.status(200).json(favorites.rows);
 });
 
+// get ALL images by most recently generated
+app.get("/explore", async (req, res) => {
+  try {
+    // Get all images from Images table and sort them by created_at in descending order
+    const images = await client.query('SELECT image_url FROM Images ORDER BY created_at DESC');
+
+    res.status(200).json(images.rows);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ error: 'An error occurred while fetching the images' });
+  }
+});
+
+
 
 //post for saving image urls to favorites by email
 
@@ -195,6 +209,10 @@ app.post("/generate", async (req, res) => {
   https.get(image_url, (response) => {
     response.pipe(fs.createWriteStream('./public/' + filename + '.png'));
   });
+
+  // Insert the image URL into the Images table
+  const insertQuery = "INSERT INTO Images (image_url, created_at) VALUES ($1, NOW())";
+  await client.query(insertQuery, [image_url]);
 
   return res.status(200).send({
     src: image_url,
