@@ -42,7 +42,7 @@ const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
               </li>
               <li>
                 <Link to="/favorites">Favorites</Link>
-
+                <Link to="/explore">Explore</Link>
               </li>
             </>
           )}
