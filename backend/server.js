@@ -10,11 +10,17 @@ const path = require("path");
 const fs = require('fs');
 const https = require('https');
 
+const cookieParser = require('cookie-parser');
+
+
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser('imageapi'));
+
 
 const configurationImage = new Configuration({
   apiKey: process.env.OPENAI_API_KEY_IMAGE,
@@ -62,7 +68,6 @@ app.get("/", (req, res) => {
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  // Validation
   if (!email || !password) {
     return res.status(400).json({ error: "Bad Request!!!" });
   }
@@ -73,22 +78,29 @@ app.post("/login", async (req, res) => {
   const result = await client.query(query, values);
 
   if (result.rowCount === 1) {
-    // Login successful
     const user = result.rows[0];
+    res.cookie('loggedInUser', user.username, { maxAge: 900000, httpOnly: true });
     return res.status(200).json({ message: "Login successful", user: { username: user.username } });
   } else {
-    // Login failed
     return res.status(401).json({ error: "Unauthorized" });
   }
 });
 
+app.get("/protected-route", (req, res) => {
+  const loggedInUser = req.cookies.loggedInUser;
+
+  if (loggedInUser) {
+    return res.status(200).json({ message: "Welcome to the protected route", user: loggedInUser });
+  } else {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+});
 
 
 // Register endpoint
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
-  // Validation
   if (!username || !email || !password) {
     return res.status(400).send("Bad Request!!!");
   }
@@ -260,6 +272,22 @@ app.use(express.static(path.join(__dirname, "public")));
 //     res.sendFile(path.join(__dirname, "client/build", "index.html"));
 //   });
 // }
+
+// Route to set a cookie
+app.get("/set-cookie", (req, res) => {
+  res.cookie("myCookie", "cookie-value", { maxAge: 900000, httpOnly: true });
+  res.send("Cookie has been set");
+});
+
+// Route to retrieve the cookie
+app.get("/get-cookie", (req, res) => {
+  const myCookie = req.cookies.myCookie;
+  if (myCookie) {
+    res.send("Cookie value: " + myCookie);
+  } else {
+    res.send("Cookie not found");
+  }
+});
 
 // Start the server
 const port = process.env.PORT || 8000;

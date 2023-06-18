@@ -23,8 +23,9 @@ const App = () => {
           <Route path="/" element={<Main userName={userName} />} />
           <Route path="/login" element={<LoginForm onLogin={setUserName} />} />
           <Route path="/register" element={<RegisterForm />} />
-          <Route exact path="/favorites" element={<Favorites userName={userName}/>} />
           <Route path="/explore" element={<Latest />} />
+          <Route path="/favorites" element={<Favorites userName={userName}/>} />
+       
         </Routes>
       </Router>
 

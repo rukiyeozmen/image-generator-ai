@@ -18,7 +18,9 @@ const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
         <ul className="no-bullets">
           <li>
             <Link to="/">Home</Link>
+            <Link to="/explore">Explore</Link>
           </li>
+         
           {!isAuthenticated && (
             <>
               <li>
@@ -26,9 +28,6 @@ const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
               </li>
               <li>
                 <Link to="/register">Register</Link>
-              </li>
-              <li>
-                <Link to="/favorites">Favorites</Link>
               </li>
             </>
           )}
@@ -42,8 +41,8 @@ const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
               </li>
               <li>
                 <Link to="/favorites">Favorites</Link>
-                <Link to="/explore">Explore</Link>
               </li>
+            
             </>
           )}
         </ul>
