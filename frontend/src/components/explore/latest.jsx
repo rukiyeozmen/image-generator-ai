@@ -35,10 +35,14 @@ const Latest = () => {
 
   const handleDownload = async (imageUrl) => {
     try {
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const filename = 'image.png';
+      const response = await axios.get('/download', {
+        params: { imageUrl },
+        responseType: 'blob',
+      });
+  
+      const blob = response.data;
       const blobUrl = URL.createObjectURL(blob);
+      const filename = 'image.png';
   
       const downloadLink = document.createElement('a');
       downloadLink.href = blobUrl;
@@ -54,6 +58,8 @@ const Latest = () => {
     }
   };
   
+  
+
   return (
     <div className="main">
       <h1>Latest Images</h1>
