@@ -24,7 +24,7 @@ const App = () => {
           <Route path="/login" element={<LoginForm onLogin={setUserName} />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/explore" element={<Latest />} />
-          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/favorites" element={<Favorites userName={userName}/>} />
        
         </Routes>
       </Router>
