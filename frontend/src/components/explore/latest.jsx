@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Modal from 'react-modal';
 
 const Latest = () => {
   const [images, setImages] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // fetch the images when component mounts
   useEffect(() => {
     const fetchImages = async () => {
       try {
         const response = await axios.get(`/explore`);
-        // Sort images by creation timestamp, from most recent to oldest
-        const sortedImages = response.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        const sortedImages = response.data.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
         setImages(sortedImages);
       } catch (error) {
         console.error(error);
@@ -20,13 +23,62 @@ const Latest = () => {
     fetchImages();
   }, []);
 
-  // map over the array and render each image
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+    setIsModalOpen(false);
+  };
+
+  const handleDownload = async (imageUrl) => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const filename = 'image.png';
+      const blobUrl = URL.createObjectURL(blob);
+  
+      const downloadLink = document.createElement('a');
+      downloadLink.href = blobUrl;
+      downloadLink.download = filename;
+      downloadLink.target = '_blank';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+  
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error('Error downloading the image:', error);
+    }
+  };
+  
   return (
     <div className="main">
       <h1>Latest Images</h1>
       {images.map((image, index) => (
-        <img key={index} src={image.image_url} alt="Image" />
+        <div key={index}>
+          <img
+            src={image.image_url}
+            alt="Image"
+            onClick={() => handleImageClick(image)}
+          />
+        </div>
       ))}
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Image Modal"
+      >
+        {selectedImage && (
+          <>
+            <img src={selectedImage.image_url} alt="Image" />
+            <button onClick={() => handleDownload(selectedImage.image_url)}>Download</button>
+          </>
+        )}
+        <button onClick={closeModal}>Close</button>
+      </Modal>
     </div>
   );
 };
