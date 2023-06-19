@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Themes from "../themes/Themes";
 import "./main.scss";
@@ -33,7 +33,23 @@ const Main = ({ userName }) => {
   const [shareUrls, setShareUrls] = useState(null);
   const [downloadUrl, setDownloadUrl] = useState("");
   const [generatedHashtags, setGeneratedHashtags] = useState([]);
-  const [showHashtags, setShowHashtags] = useState(false); // New state variable
+  const [showHashtags, setShowHashtags] = useState(false); 
+
+  const [accessToken, setAccessToken] = useState('');
+
+  useEffect(() => {
+    const fetchAccessToken = async () => {
+      try {
+        const response = await axios.get("/get-access-token");
+        setAccessToken(response.data.accessToken);
+      } catch (error) {
+        console.error("Error fetching access token:", error);
+      }
+    };
+
+    fetchAccessToken();
+  }, []);
+
 
   const clickHandler = async () => {
    try {
@@ -98,6 +114,8 @@ const Main = ({ userName }) => {
       .catch((error) => {
         console.error("Error downloading image:", error);
       });
+
+      
   };
 
   return (
