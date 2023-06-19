@@ -164,6 +164,27 @@ app.get("/explore", async (req, res) => {
 });
 
 
+app.get("/download", async (req, res) => {
+  const { imageUrl } = req.query;
+
+  try {
+    const response = await axios.get(imageUrl, {
+      responseType: 'blob',
+    });
+
+    res.setHeader('Content-Type', response.headers['content-type']);
+    res.setHeader('Content-Disposition', 'attachment; filename="image.png"');
+    res.send(response.data);
+  } catch (error) {
+    console.error('Error downloading the image:', error);
+    res.status(500).json({ error: 'An error occurred while downloading the image' });
+  }
+});
+
+
+
+
+
 
 //post for saving image urls to favorites by email
 
