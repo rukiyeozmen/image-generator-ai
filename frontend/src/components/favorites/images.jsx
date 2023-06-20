@@ -21,7 +21,6 @@ const Images = ({ userEmail }) => {
   // map over array and renders each image
   return (
     <div className="main">
-      <h1>Favorites</h1>
       {favorites.map((image, index) => (
         <img key={index} src={image.image_url} alt="Favorite" />
       ))}

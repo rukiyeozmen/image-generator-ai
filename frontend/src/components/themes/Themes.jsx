@@ -24,7 +24,7 @@ const Themes = ({ setTheme }) => {
   };
 
   return (
-    <div>
+    <div className='button-container'>
        {themes.map((theme) => (
         <button 
           className={`theme-button ${selectedTheme === theme.label ? 'theme-button-selected' : ''}`}

@@ -21,19 +21,21 @@ const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
           <Link to="/explore">Explore</Link>
           {isAuthenticated && (
             <>
-              <Link to="/">{userName}</Link>
-              <Link to="/favorites">Favorites</Link>
+                <Link to="/favorites">Favorites</Link>
             </>
           )}
         </div>
         {!isAuthenticated && (
           <div className="nav-links-right">
+
             <Link className="btn btn-outline-secondary" to="/login">Login</Link>
             <Link className="btn btn-outline-secondary" to="/register">Register</Link>
           </div>
         )}
         {isAuthenticated && (
           <div className="nav-links-right">
+                                      <Link to="/"> {userName}</Link>
+
             <button className="btn btn-outline-secondary" onClick={handleLogoutClick}>Logout</button>
           </div>
         )}

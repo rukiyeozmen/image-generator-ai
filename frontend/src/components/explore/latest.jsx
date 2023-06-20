@@ -63,7 +63,6 @@ const Latest = () => {
   
   return (
     <div className="main">
-      <h1>Latest Images</h1>
       {images.map((image, index) => (
         <div key={index}>
           <img src={image.image_url} alt="All generated photos" onClick={() => handleImageClick(image)}/>
