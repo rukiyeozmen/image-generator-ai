@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Themes from "../themes/Themes";
 import "./main.scss";
@@ -35,21 +35,6 @@ const Main = ({ userName }) => {
   const [generatedHashtags, setGeneratedHashtags] = useState([]);
   const [showHashtags, setShowHashtags] = useState(false); 
 
-  const [accessToken, setAccessToken] = useState('');
-
-  useEffect(() => {
-    const fetchAccessToken = async () => {
-      try {
-        const response = await axios.get("/get-access-token");
-        setAccessToken(response.data.accessToken);
-      } catch (error) {
-        console.error("Error fetching access token:", error);
-      }
-    };
-
-    fetchAccessToken();
-  }, []);
-
 
   const clickHandler = async () => {
    try {
@@ -72,7 +57,7 @@ const Main = ({ userName }) => {
      const hashtagsResponse = await axios.post(hashtagsUrl, hashtagsData);
      const hashtags = hashtagsResponse.data;
      setGeneratedHashtags(hashtags);
-     setShowHashtags(true); // Show the hashtags
+     setShowHashtags(true); 
  
      const shareText = `${prompt} ${hashtags.join(" ")}`;
      const shareUrls = {
@@ -114,8 +99,6 @@ const Main = ({ userName }) => {
       .catch((error) => {
         console.error("Error downloading image:", error);
       });
-
-      
   };
 
   return (
