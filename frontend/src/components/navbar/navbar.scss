@@ -1,14 +1,40 @@
-.navbar {
+
+.navparent {
+
   width: 100%;
   height: 100px;
+  background-color: #ffffff;
+}
+
+.navbar {
+  width: 90%; // decrease the width to 70%
+   // limit the maximum width
+  margin: 0 auto; // center the navbar
+  height: 100px;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  
   align-items: center;
   padding-left: 1rem;
-  color: #fff;
-  background-color: rgb(146, 146, 229);
+  color: #000000;
+  flex-direction: row;
 }
-  .no-bullets {
-    list-style-type: none;
+
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+}
+
+.nav-links-left, .nav-links-right {
+  display: flex;
+}
+
+.nav-links-left > a, .nav-links-right > a, .nav-links-right > button {
+  padding: 10px;
+  margin: 0 5px;
+  color: #000000;
+  text-decoration: none;
+  font-size: 1.5em; // increase the font size
+  font-weight: bold; // make the font bold
 }

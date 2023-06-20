@@ -7,6 +7,7 @@ import RegisterForm from './components/login/RegisterForm';
 import Favorites from './pages/Favorites';
 import Latest from './components/explore/latest';
 
+
 const App = () => {
   const [userName, setUserName] = useState('');
 

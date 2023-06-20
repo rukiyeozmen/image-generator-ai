@@ -24,8 +24,15 @@ INSERT INTO Captions (caption, user_id, image_id) VALUES
 -- Insert sample data for the Captions table
 INSERT INTO Themes (label, content) VALUES
   ('sketch', 'in the style of Hand-drawn with graphite pencil'),
-  ('anime', 'In the style of anime from studio ghibli'),
-  ('miami', 'in the style of miami vice synthwave and neo tokyo retro vibes');
+  ('painting', 'painted in the style of John Audubon'),
+  ('anime', 'In the style of anime from neon genesis evangelion'),
+  ('miami', 'in the style of miami vice synthwave and neo tokyo retro vibes'),
+  ('vector', 'in retro vector illustration'), 
+  ('3D', 'in the style of a 3D render'),
+  ('realistic', 'with detailed, photo-realistic, diffused soft lighting, sharp focus, hyperrealism, cinematic lighting'),
+  ('gauche', 'Expressive dark matte gouche painting. --ar 4:5' );
+
+
 
 --Isert sample data for Favorite page
 INSERT INTO Favorites (image_url, username) Values

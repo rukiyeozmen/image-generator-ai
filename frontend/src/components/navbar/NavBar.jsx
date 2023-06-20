@@ -10,45 +10,35 @@ const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
     navigate('/');
   };
 
+  
   return (
+    <div className='navparent'>
     <div className="navbar">
       <h1>ImageNius</h1>
-      <nav>
-
-        <ul className="no-bullets">
-          <li>
-            <Link to="/">Home</Link>
-            </li>
-          <li> 
-            <Link to="/explore">Explore</Link> 
-            </li>
-           
-          {!isAuthenticated && (
-            <>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/register">Register</Link>
-              </li>
-            </>
-          )}
+      <nav className="nav-links">
+        <div className="nav-links-left">
+          <Link to="/">Home</Link>
+          <Link to="/explore">Explore</Link>
           {isAuthenticated && (
             <>
-              <li>
-                <Link to="/">{userName}</Link>
-              </li>
-              <li>
-                <button onClick={handleLogoutClick}>Logout</button>
-              </li>
-              <li>
-                <Link to="/favorites">Favorites</Link>
-              </li>
-            
+              <Link to="/">{userName}</Link>
+              <Link to="/favorites">Favorites</Link>
             </>
           )}
-        </ul>
+        </div>
+        {!isAuthenticated && (
+          <div className="nav-links-right">
+            <Link className="btn btn-outline-secondary" to="/login">Login</Link>
+            <Link className="btn btn-outline-secondary" to="/register">Register</Link>
+          </div>
+        )}
+        {isAuthenticated && (
+          <div className="nav-links-right">
+            <button className="btn btn-outline-secondary" onClick={handleLogoutClick}>Logout</button>
+          </div>
+        )}
       </nav>
+    </div>
     </div>
   );
 };

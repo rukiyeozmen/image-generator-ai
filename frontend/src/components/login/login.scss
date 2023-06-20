@@ -1,7 +1,27 @@
+.parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  margin: 0;
+  padding: 0;
+}
+
+.container-sm {
+  width: 350px; /* adjust this to your preference */
+  border: 1px solid #ccc; /* adjust color as needed */
+  border-radius: 4px;
+  padding: 20px; /* adjust padding as needed */
+  margin: auto;
+}
+
+
 .login-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  height: 30vh;
 }
 
 .login-form {
