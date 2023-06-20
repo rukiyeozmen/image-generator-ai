@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 
+import "../explore/modal.scss";
+
+
 const Latest = () => {
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -58,33 +61,49 @@ const Latest = () => {
     }
   };
   
-  
-
   return (
     <div className="main">
       <h1>Latest Images</h1>
       {images.map((image, index) => (
         <div key={index}>
-          <img
-            src={image.image_url}
-            alt="Image"
-            onClick={() => handleImageClick(image)}
-          />
+          <img src={image.image_url} alt="All generated photos" onClick={() => handleImageClick(image)}/>
         </div>
       ))}
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel="Image Modal"
-      >
-        {selectedImage && (
-          <>
-            <img src={selectedImage.image_url} alt="Image" />
-            <button onClick={() => handleDownload(selectedImage.image_url)}>Download</button>
-          </>
-        )}
-        <button onClick={closeModal}>Close</button>
-      </Modal>
+
+
+<Modal
+  isOpen={isModalOpen}
+  onRequestClose={closeModal}
+  contentLabel="Image Modal"
+  className="photo-details-modal"
+  overlayClassName="custom-modal-overlay"
+>
+  {selectedImage && (
+    <div>
+      <img src={selectedImage.image_url} alt="All generated photos" />
+      <br />
+      <>
+      <img
+  src={require('./download-icon.png')}
+  alt="Download"
+  onClick={() => handleDownload(selectedImage.image_url)}
+  className="download-icon"
+/>
+
+
+      </>
+
+
+      <button className="photo-details-modal--close-button" type="button" onClick={closeModal} >
+        <img src={require('./close-icon.png')} alt="Close" />
+      </button>
+    </div>
+  )}
+</Modal>
+
+
+
+
     </div>
   );
 };
