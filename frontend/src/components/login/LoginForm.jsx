@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import './login.scss';
+import { Container } from '@mui/material';
 
 const LoginForm = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -31,7 +32,9 @@ const LoginForm = ({ onLogin }) => {
     
 
   return (
-    <div className="login-container">
+    <div className='parent'>
+    <div className='container-sm'>
+      <div className="login-container">
       <h1>Login</h1>
       <form className="login-form" onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
@@ -52,6 +55,8 @@ const LoginForm = ({ onLogin }) => {
         <br />
         <button type="submit">Login</button>
       </form>
+      </div>
+    </div>
     </div>
   );
 };

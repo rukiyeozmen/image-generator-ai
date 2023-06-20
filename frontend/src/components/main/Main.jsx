@@ -120,6 +120,7 @@ const Main = ({ userName }) => {
 
   return (
     <div className="main">
+      <div className="maincard">
       <Stack spacing={1} className="main-stack">
         <TextField label="Prompt" variant="outlined" value={prompt}
           onChange={(e) => setPrompt(e.target.value)}/>
@@ -180,6 +181,7 @@ const Main = ({ userName }) => {
           Please enter a prompt!
         </Alert>
       </Snackbar>
+    </div>
     </div>
   );
 };
