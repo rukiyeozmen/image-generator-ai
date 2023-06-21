@@ -35,8 +35,9 @@ Clone the application to your computer.
    <br />
 
     PORT = 8000
-   
+   <br />
     OPENAI_API_KEY_IMAGE = 'ENTER YOUR API'
+   <br />
     OPENAI_API_KEY_TEXT = 'ENTER YOUR API'
 
     PGHOST=localhost
