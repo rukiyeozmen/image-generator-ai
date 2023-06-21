@@ -39,11 +39,15 @@ Clone the application to your computer.
     OPENAI_API_KEY_IMAGE = 'ENTER YOUR API'
    <br />
     OPENAI_API_KEY_TEXT = 'ENTER YOUR API'
-
+<br />
     PGHOST=localhost
+   <br />
     PGUSER=labber
+   <br />
     PGDATABASE=final
+   <br />
     PGPASSWORD="labber"
+   <br />
     PGPORT=5432
    
 <br />
