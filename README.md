@@ -33,14 +33,10 @@ Clone the application to your computer.
 
 2. Create your own .ENV file in the Backend folder. Generate API keys from this [https://openai.com/](https://openai.com/).
    <br />
- PORT = 8000
-<br />
-
+    PORT = 8000
+   
     OPENAI_API_KEY_IMAGE = 'ENTER YOUR API'
-    <br />
-
     OPENAI_API_KEY_TEXT = 'ENTER YOUR API'
-    <br />
 
     PGHOST=localhost
     PGUSER=labber
@@ -49,9 +45,9 @@ Clone the application to your computer.
     PGPORT=5432
 <br />
 
-3. Create a new database connection and run this commands:
+4. Create a new database connection and run these commands:
 <br />
-   a. Run scheema \i db/schema/image_generator.sql
+   a. Run schema \i db/schema/image_generator.sql
 <br />
    b. Run seeds  \i db/seeds/01_images.sql
 
