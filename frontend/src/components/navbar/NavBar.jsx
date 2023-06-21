@@ -14,7 +14,7 @@ const NavBar = ({ isAuthenticated, handleLogout, userName }) => {
   return (
     <div className='navparent'>
     <div className="navbar">
-      <h1>ImageNius</h1>
+      <h1 className='font-bar'>imagenius</h1>
       <nav className="nav-links">
         <div className="nav-links-left">
           <Link to="/">Home</Link>

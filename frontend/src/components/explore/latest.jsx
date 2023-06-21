@@ -82,19 +82,12 @@ const Latest = () => {
       <img src={selectedImage.image_url} alt="All generated photos" />
       <br />
       <>
-      <img
-  src={require('./download-icon.png')}
-  alt="Download"
-  onClick={() => handleDownload(selectedImage.image_url)}
-  className="download-icon"
-/>
-
-
+      <img src={require('../explore/download-icon.png')} alt="Download" 
+      onClick={() => handleDownload(selectedImage.image_url)} className="download-icon"
+        />
       </>
-
-
       <button className="photo-details-modal--close-button" type="button" onClick={closeModal} >
-        <img src={require('./close-icon.png')} alt="Close" />
+        <img src={require('../explore/close-icon.png')} alt="Close" />
       </button>
     </div>
   )}

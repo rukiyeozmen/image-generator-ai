@@ -1,26 +1,20 @@
-
 .navparent {
-
   width: 100%;
-  height: 100px;
+  height: 90px;
   background-color: #f7f4f4;
-
 }
 
 .navbar {
-  width: 90%; // decrease the width to 70%
-   // limit the maximum width
-  margin: 0 auto; // center the navbar
-  height: 100px;
+  width: 90%; 
+  margin: 0 auto; 
+  height: 90px;
   display: flex;
   
   align-items: center;
   padding-left: 1rem;
   color: #000000;
   flex-direction: row;
-  
 }
-
 
 .nav-links {
   display: flex;
@@ -37,6 +31,15 @@
   margin: 0 5px;
   color: #000000;
   text-decoration: none;
-  font-size: 1.5em; // increase the font size
-  font-weight: bold; // make the font bold
+  font-size: 1.3em; 
+}
+
+@font-face {
+  font-family: 'CustomFont';
+  src: url('../navbar/RoseauSlab-FREE.ttf') format('truetype');
+}
+
+.font-bar {
+  font-family: 'CustomFont', sans-serif;
+  font-size: 45px;
 }
