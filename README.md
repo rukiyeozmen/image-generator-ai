@@ -33,7 +33,7 @@ Clone the application to your computer.
 
 2. Create your own .ENV file in the Backend folder. Generate API keys from this [https://openai.com/](https://openai.com/).
    <br />
-
+   <div>
     PORT = 8000
    <br />
     OPENAI_API_KEY_IMAGE = 'ENTER YOUR API'
@@ -49,7 +49,7 @@ Clone the application to your computer.
     PGPASSWORD="labber"
    <br />
     PGPORT=5432
-   
+ </div>  
 <br />
 
 4. Create a new database connection and run these commands:
