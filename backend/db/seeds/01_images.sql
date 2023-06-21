@@ -10,8 +10,12 @@ INSERT INTO Images (image_url) VALUES
   ('https://i.imgur.com/etFhqQl.png'),
   ('https://i.imgur.com/cFijKQT.png'),
   ('https://i.imgur.com/YpzGE0D.png'),
-  ('https://i.imgur.com/gAkahvh.png');
-
+  ('https://i.imgur.com/gAkahvh.png'),
+  ('https://i.imgur.com/HqgHTE2.png'),
+  ('https://i.imgur.com/OakaUr7.png'),
+  ('https://i.imgur.com/qRA431Z.png'),
+  ('https://i.imgur.com/kBz7zZ6.png'),
+  ('https://i.imgur.com/jUcOEpB.png');
 
 
 -- Insert sample data for the Captions table
@@ -39,4 +43,7 @@ INSERT INTO Favorites (image_url, username) Values
   ('https://i.imgur.com/YpzGE0D.png', 'John'),
   ('https://i.imgur.com/ZBTiuhF.png', 'John'), 
   ('https://i.imgur.com/cFijKQT.png', 'John'), 
-  ('https://i.imgur.com/etFhqQl.png', 'John');
+  ('https://i.imgur.com/etFhqQl.png', 'John'),
+  ('https://i.imgur.com/OakaUr7.png', 'John'),
+  ('https://i.imgur.com/kBz7zZ6.png', 'John'),
+  ('https://i.imgur.com/jUcOEpB.png', 'John');
