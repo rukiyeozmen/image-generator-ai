@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import '../favorites/favorite-page.scss';
+
 const Images = ({ userEmail }) => {
   const [favorites, setFavorites] = useState([]);
 
-  // mount component
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
         const response = await axios.get(`/user/favorite?userName=${userEmail}`);
-        setFavorites(response.data);
+        setFavorites(response.data.reverse()); // Reverse the order of favorites
       } catch (error) {
         console.error(error);
       }
@@ -18,15 +19,17 @@ const Images = ({ userEmail }) => {
     fetchFavorites();
   }, [userEmail]);
 
-  // map over array and renders each image
   return (
-    <div className="main">
-      {favorites.map((image, index) => (
-        <img key={index} src={image.image_url} alt="Favorite" />
-      ))}
+    <div className="fav-style">
+      <div className="image-grid">
+        {favorites.map((image, index) => (
+          <div key={index} className="photo-item">
+            <img src={image.image_url} alt="Favorite" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
 export default Images;
-

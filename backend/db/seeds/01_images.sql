@@ -48,4 +48,6 @@ INSERT INTO Favorites (image_url, username) Values
   ('https://i.imgur.com/etFhqQl.png', 'John'),
   ('https://i.imgur.com/OakaUr7.png', 'John'),
   ('https://i.imgur.com/kBz7zZ6.png', 'John'),
-  ('https://i.imgur.com/jUcOEpB.png', 'John');
+  ('https://i.imgur.com/jUcOEpB.png', 'John'),
+  ('https://i.imgur.com/mUA3Ob6.png', 'John');
+
