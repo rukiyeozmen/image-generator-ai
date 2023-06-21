@@ -31,7 +31,7 @@ Clone the application to your computer.
    ```
    For both folders /frontend and /backend.
 
-2. Create your own .ENV file in the Backend folder. Generate API keys from this [https://openai.com/](https://openai.com/).
+2. Create your own .ENV file in the Backend folder. Generate API keys from this [Link](https://openai.com/).
    <br />
    <div>
     PORT = 8000
