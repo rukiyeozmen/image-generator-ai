@@ -51,13 +51,13 @@ Clone the application to your computer.
     PGPORT=5432
  </div>  
 <br />
-
+<div>
 4. Create a new database connection and run these commands:
 <br />
    a. Run schema \i db/schema/image_generator.sql
 <br />
    b. Run seeds  \i db/seeds/01_images.sql
-
+</div>
 
 
 
