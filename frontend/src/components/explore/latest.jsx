@@ -3,6 +3,8 @@ import axios from 'axios';
 import Modal from 'react-modal';
 
 import "../explore/modal.scss";
+import '../explore/latest.scss';
+
 
 
 const Latest = () => {
@@ -62,12 +64,17 @@ const Latest = () => {
   };
   
   return (
-    <div className="main">
-      {images.map((image, index) => (
-        <div key={index}>
-          <img src={image.image_url} alt="All generated photos" onClick={() => handleImageClick(image)}/>
-        </div>
-      ))}
+    <div className="parent-container">
+    <div className="background-container">
+      <div className="image-grid">
+        {images.map((image, index) => (
+          <div key={index} className="photo-item">
+            <img src={image.image_url} alt="All generated photos" onClick={() => handleImageClick(image)}/>
+          </div>
+        ))}
+      </div>
+     </div>
+    
 
 
 <Modal
