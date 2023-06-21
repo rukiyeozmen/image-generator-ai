@@ -1,5 +1,5 @@
 
-  <h3 align="center">imagenius</h3>
+  <h2 align="center"><b>imagenius</b>imagenius</h2>
 
   <p align="center"> "Imagenius" is an impressive web application developed as the final project for a web development bootcamp.
 
