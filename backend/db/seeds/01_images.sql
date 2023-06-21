@@ -9,13 +9,15 @@ INSERT INTO Images (image_url) VALUES
   ('https://i.imgur.com/DHU5Jg7.png'),
   ('https://i.imgur.com/etFhqQl.png'),
   ('https://i.imgur.com/cFijKQT.png'),
+  ('https://i.imgur.com/RZxpzev.png'),
   ('https://i.imgur.com/YpzGE0D.png'),
   ('https://i.imgur.com/gAkahvh.png'),
   ('https://i.imgur.com/HqgHTE2.png'),
   ('https://i.imgur.com/OakaUr7.png'),
   ('https://i.imgur.com/qRA431Z.png'),
   ('https://i.imgur.com/kBz7zZ6.png'),
-  ('https://i.imgur.com/jUcOEpB.png');
+  ('https://i.imgur.com/jUcOEpB.png'),
+  ('https://i.imgur.com/FZHfDC6.png');
 
 
 -- Insert sample data for the Captions table
