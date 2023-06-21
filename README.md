@@ -1,14 +1,14 @@
 
-  <h3 align="center">imagenius/h3>
+  <h3 align="center">imagenius</h3>
 
   <p align="center"> "Imagenius" is an impressive web application developed as the final project for a web development bootcamp.
 
 ## About The Project
 <p>Imagenuis is an exceptional web application that combines the power of artificial intelligence to generate captivating images and creative hashtags. Designed as the culmination of a web development bootcamp, this innovative platform delivers an unparalleled user experience by harnessing the capabilities of AI. Users can access a vast collection of AI-generated images, ensuring a never-ending source of visual inspiration. Additionally, Imagenuis provides a unique feature of AI-generated hashtags, allowing users to effortlessly enhance their social media presence with engaging and relevant content. With its seamless functionality and cutting-edge technology, Imagenuis truly stands out as a remarkable achievement in the realm of web development.</p>
 
-[![Main Page][Main]](https://i.imgur.com/0DE9UCc.png)
-[![Latest images page][Latest]](https://i.imgur.com/cHwrT4z.png)
-[![Favorite Page][Favorite]](https://i.imgur.com/1ATf8t0.png)
+[![Main Page](img-md/main.png)]
+[![Latest images page](img-md/explore.png)]
+[![Favorite Page](img-md/favorite.png)]
 
 
 ### Built With
