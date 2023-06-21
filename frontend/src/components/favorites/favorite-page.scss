@@ -1,0 +1,34 @@
+.fav-style {
+  display: flex;
+  justify-content: center;
+  background-image: url('../../../public/images/aldebaran-s-qtRF_RxCAo0-unsplash.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: 100vh;
+}
+
+.fav-style .image-grid {
+  background-color: rgba(168, 156, 156, 0.8);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1000px;
+  margin: 20px auto;
+  border-radius: 10px;
+}
+
+.fav-style .photo-item {
+  flex-basis: calc(33.33% - 20px); /* Adjusted to display three images per line */
+  height: 250px;
+  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fav-style .photo-details-modal {
+  background-color: rgba(242, 242, 242, 0.8);
+}
