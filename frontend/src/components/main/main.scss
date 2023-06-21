@@ -60,10 +60,23 @@ img {
   align-items: center;
   align-self: flex-end;
   margin: 0 0 0 0;
-  
   gap: 0.5rem;
 }
+.icon-buttons img {
+  transition: border-color 0.3s;
+  border: 2px solid transparent;
+  border-radius: 50%;
+}
 
+.icon-buttons img:hover {
+  border-color: rgb(6, 6, 55);
+}
+
+.image-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media screen and (min-width: 600px) {
   .maincard {
     flex-direction: row;
