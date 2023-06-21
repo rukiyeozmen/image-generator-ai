@@ -12,10 +12,10 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await axios.post('/register', { username, email, password });
-  
+
       if (response.status === 200) {
         navigate('/login');
       } else {
@@ -25,7 +25,6 @@ const RegisterForm = () => {
       console.error('Error during registration:', error);
     }
   };
-  
 
   return (
     <div className="register-container">
@@ -37,7 +36,7 @@ const RegisterForm = () => {
           id="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          required/>
+          required />
         <br />
         <label htmlFor="email">Email:</label>
         <input
@@ -45,7 +44,7 @@ const RegisterForm = () => {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required/>
+          required />
         <br />
         <label htmlFor="password">Password:</label>
         <input
@@ -53,7 +52,7 @@ const RegisterForm = () => {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required/>
+          required />
         <br />
         <button type="submit">Register</button>
       </form>
