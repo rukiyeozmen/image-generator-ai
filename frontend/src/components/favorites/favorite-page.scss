@@ -21,7 +21,7 @@
 }
 
 .fav-style .photo-item {
-  flex-basis: calc(33.33% - 20px); /* Adjusted to display three images per line */
+  flex-basis: calc(33.33% - 20px);
   height: 250px;
   object-fit: cover;
   display: flex;
