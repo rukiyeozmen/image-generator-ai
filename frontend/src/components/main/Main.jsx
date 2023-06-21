@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Themes from "../themes/Themes";
 import "./main.scss";
-import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share';
+//import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share';
 
 import {
   Stack,
@@ -128,14 +128,11 @@ const Main = ({ userName }) => {
                   <div className="image-overlay">
                     <div className="icon-buttons">
 
-                        <img src={require('./save-fav.png')} alt="Save_fav" onClick={save}
+                      <img src={require('./save-fav.png')} alt="Save_fav" onClick={save}
                         className="icon-buttons" />
 
                       <img src={require('./download-icon.png')} alt="Download" onClick={downloadImage} className="icon-buttons" />
 
-                      
-
-                   
                       {shareUrls && (
                         <>
                           <img

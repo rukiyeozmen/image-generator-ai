@@ -25,8 +25,8 @@ const Themes = ({ setTheme }) => {
 
   return (
     <div className='button-container'>
-       {themes.map((theme) => (
-        <button 
+      {themes.map((theme) => (
+        <button
           className={`theme-button ${selectedTheme === theme.label ? 'theme-button-selected' : ''}`}
           onClick={() => handleThemeClick(theme)}
         >

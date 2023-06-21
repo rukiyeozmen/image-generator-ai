@@ -10,7 +10,7 @@ const Images = ({ userEmail }) => {
     const fetchFavorites = async () => {
       try {
         const response = await axios.get(`/user/favorite?userName=${userEmail}`);
-        setFavorites(response.data.reverse()); // Reverse the order of favorites
+        setFavorites(response.data.reverse());
       } catch (error) {
         console.error(error);
       }

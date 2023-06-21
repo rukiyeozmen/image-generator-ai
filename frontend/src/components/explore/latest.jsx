@@ -5,8 +5,6 @@ import Modal from 'react-modal';
 import "../explore/modal.scss";
 import '../explore/latest.scss';
 
-
-
 const Latest = () => {
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -44,11 +42,11 @@ const Latest = () => {
         params: { imageUrl },
         responseType: 'blob',
       });
-  
+
       const blob = response.data;
       const blobUrl = URL.createObjectURL(blob);
       const filename = 'image.png';
-  
+
       const downloadLink = document.createElement('a');
       downloadLink.href = blobUrl;
       downloadLink.download = filename;
@@ -56,53 +54,47 @@ const Latest = () => {
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
-  
+
       URL.revokeObjectURL(blobUrl);
     } catch (error) {
       console.error('Error downloading the image:', error);
     }
   };
-  
+
   return (
     <div className="parent-container">
-    <div className="background-container">
-      <div className="image-grid">
-        {images.map((image, index) => (
-          <div key={index} className="photo-item">
-            <img src={image.image_url} alt="All generated photos" onClick={() => handleImageClick(image)}/>
-          </div>
-        ))}
+      <div className="background-container">
+        <div className="image-grid">
+          {images.map((image, index) => (
+            <div key={index} className="photo-item">
+              <img src={image.image_url} alt="All generated photos" onClick={() => handleImageClick(image)} />
+            </div>
+          ))}
+        </div>
       </div>
-     </div>
-    
 
-
-<Modal
-  isOpen={isModalOpen}
-  onRequestClose={closeModal}
-  contentLabel="Image Modal"
-  className="photo-details-modal"
-  overlayClassName="custom-modal-overlay"
->
-  {selectedImage && (
-    <div>
-      <img src={selectedImage.image_url} alt="All generated photos" />
-      <br />
-      <>
-      <img src={require('../explore/download-icon.png')} alt="Download" 
-      onClick={() => handleDownload(selectedImage.image_url)} className="download-icon"
-        />
-      </>
-      <button className="photo-details-modal--close-button" type="button" onClick={closeModal} >
-        <img src={require('../explore/close-icon.png')} alt="Close" />
-      </button>
-    </div>
-  )}
-</Modal>
-
-
-
-
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Image Modal"
+        className="photo-details-modal"
+        overlayClassName="custom-modal-overlay"
+      >
+        {selectedImage && (
+          <div>
+            <img src={selectedImage.image_url} alt="All generated photos" />
+            <br />
+            <>
+              <img src={require('../explore/download-icon.png')} alt="Download"
+                onClick={() => handleDownload(selectedImage.image_url)} className="download-icon"
+              />
+            </>
+            <button className="photo-details-modal--close-button" type="button" onClick={closeModal} >
+              <img src={require('../explore/close-icon.png')} alt="Close" />
+            </button>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };
