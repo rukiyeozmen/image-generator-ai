@@ -28,7 +28,6 @@ const openaiText = new OpenAIApi(configurationImage);
 const openaiImage = new OpenAIApi(configurationText);
 
 
-// Database connection
 const client = new Client({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -73,16 +72,12 @@ app.post("/login", async (req, res) => {
   const result = await client.query(query, values);
 
   if (result.rowCount === 1) {
-    // Login successful
     const user = result.rows[0];
     return res.status(200).json({ message: "Login successful", user: { username: user.username } });
   } else {
-    // Login failed
     return res.status(401).json({ error: "Unauthorized" });
   }
 });
-
-
 
 // Register endpoint
 app.post("/register", async (req, res) => {
@@ -99,14 +94,12 @@ app.post("/register", async (req, res) => {
   const result = await client.query(query, values);
 
   if (result.rowCount === 0) {
-    // Email is available, proceed with registration
     const insertQuery = "INSERT INTO Users (username, email, password) VALUES ($1, $2, $3)";
     const insertValues = [username, email, password];
     await client.query(insertQuery, insertValues);
 
     return res.status(201).send("Registration successful");
   } else {
-    // Email is already registered
     return res.status(409).send("Email already exists");
   }
 });
@@ -118,17 +111,11 @@ app.get("/generate", (req, res) => {
 
 // Themes
 app.get('/themes', async (req, res) => {
-  try {
-    const result = await client.query('SELECT * FROM Themes;');
-    return res.status(200).send(result.rows);
-  } catch (error) {
-    console.error('Error fetching themes:', error);
-    return res.status(500).send({ error: 'An error occurred while fetching the themes' });
-  }
+  const result = await client.query('SELECT * FROM Themes;');
+  return res.status(200).send(result.rows);
 });
 
 // get images based on user email 
-
 app.get("/user/favorite", async (req, res) => {
   const { userName } = req.query;
 
@@ -136,15 +123,12 @@ app.get("/user/favorite", async (req, res) => {
     return res.status(400).send("Missing username!");
   }
 
-  // Get user_id from Users table
   const user = await client.query('SELECT id FROM Users WHERE username = $1', [userName]);
 
   if (user.rows.length === 0) {
     return res.status(404).send("User not found!");
   }
 
-
-  // Get favorite images from Images table
   const favorites = await client.query('SELECT image_url FROM Favorites WHERE username = $1', [userName]);
 
   res.status(200).json(favorites.rows);
@@ -152,65 +136,39 @@ app.get("/user/favorite", async (req, res) => {
 
 // get ALL images by most recently generated
 app.get("/explore", async (req, res) => {
-  try {
-    // Get all images from Images table and sort them by created_at in descending order
-    const images = await client.query('SELECT image_url FROM Images ORDER BY created_at DESC');
-
-    res.status(200).json(images.rows);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).send({ error: 'An error occurred while fetching the images' });
-  }
+  const images = await client.query('SELECT image_url FROM Images ORDER BY created_at DESC');
+  res.status(200).json(images.rows);
 });
 
-
+//download images
 app.get("/download", async (req, res) => {
   const { imageUrl } = req.query;
-
-  try {
-    const response = await axios.get(imageUrl, {
-      responseType: 'blob',
-    });
-
-    res.setHeader('Content-Type', response.headers['content-type']);
-    res.setHeader('Content-Disposition', 'attachment; filename="image.png"');
-    res.send(response.data);
-  } catch (error) {
-    console.error('Error downloading the image:', error);
-    res.status(500).json({ error: 'An error occurred while downloading the image' });
-  }
+  const response = await axios.get(imageUrl, {
+    responseType: 'blob',
+  });
+  res.setHeader('Content-Type', response.headers['content-type']);
+  res.setHeader('Content-Disposition', 'attachment; filename="image.png"');
+  res.send(response.data);
 });
 
-
-
-
-
-
 //post for saving image urls to favorites by email
-
 app.post("/user/favorite", async (req, res) => {
   const { url, userName } = req.body;
 
   if (!url || !userName) {
     return res.status(400).send("Missing URL or username!");
   }
-
-  // Get user_id from Users table
   const user = await client.query('SELECT id FROM Users WHERE username = $1', [userName]);
 
   if (user.rows.length === 0) {
     return res.status(404).send("User not found!");
   }
 
-  // Update Images table
-
   const insertQuery = "INSERT INTO Favorites (image_url, username) VALUES ($1, $2)";
   const insertValues = [url, userName];
   await client.query(insertQuery, insertValues);
-
   res.status(200).send("Image saved to favorites!");
 });
-
 
 app.post("/generate", async (req, res) => {
   const { prompt, size } = req.body;
@@ -218,7 +176,6 @@ app.post("/generate", async (req, res) => {
   if (!prompt || !size) {
     return res.status(400).send("Bad Request!!!");
   }
-
   const response = await openaiImage.createImage({
     prompt,
     size,
@@ -231,7 +188,6 @@ app.post("/generate", async (req, res) => {
     response.pipe(fs.createWriteStream('./public/' + filename + '.png'));
   });
 
-  // Insert the image URL into the Images table
   const insertQuery = "INSERT INTO Images (image_url, created_at) VALUES ($1, NOW())";
   await client.query(insertQuery, [image_url]);
 
@@ -242,26 +198,20 @@ app.post("/generate", async (req, res) => {
 });
 
 app.post('/hashtags', async (req, res) => {
-  try {
-    const { prompt, keywords } = req.body;
+  const { prompt, keywords } = req.body;
 
-    const response = await openaiText.createCompletion({
-      model: 'text-davinci-003',
-      prompt: `Generate hashtags for ${keywords}`,
-      max_tokens: 100,
-    });
+  const response = await openaiText.createCompletion({
+    model: 'text-davinci-003',
+    prompt: `Generate hashtags for ${keywords}`,
+    max_tokens: 100,
+  });
 
-    const { choices } = response.data;
-    const generatedText = choices[0].text.trim();
+  const { choices } = response.data;
+  const generatedText = choices[0].text.trim();
 
-    // Extract the first 10 words from the generated text
-    const words = generatedText.split(' ').slice(0, 5);
+  const words = generatedText.split(' ').slice(0, 5);
 
-    res.json(words); // Send the words as the final response
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Something went wrong' });
-  }
+  res.json(words);
 });
 
 // Serve static files in production
