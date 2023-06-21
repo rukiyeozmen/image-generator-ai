@@ -16,9 +16,9 @@
 
 
 * [![React][React.js]][React-url]
-* [![JQuery][JQuery.com]][JQuery-url]
 * Express
 * Postgres
+
 
 
 ### Installation
