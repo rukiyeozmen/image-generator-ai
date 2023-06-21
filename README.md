@@ -1,6 +1,5 @@
 
-                          #imagenius
-
+<h1 align="center"><bold>imagenius</bold></h1>
   <p align="center"> "Imagenius" is an impressive web application developed as the final project for a web development bootcamp.
 
 ## About The Project
