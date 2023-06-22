@@ -31,7 +31,7 @@
 
 .image-wrapper {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 0.3rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,13 +59,13 @@ img {
   justify-content: center;
   align-items: center;
   align-self: flex-end;
-  margin: 0 0 0 0;
+  margin: 0 0 0 3px;
   gap: 0.5rem;
 }
 .icon-buttons img {
   transition: border-color 0.3s;
   border: 2px solid transparent;
-  border-radius: 50%;
+  border-radius: 5%;
 }
 
 .icon-buttons img:hover {
